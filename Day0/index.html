@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basics</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            width: 100%;
+            display: inline-block;
+            text-align: center;
+        }
+        h1 {
+            margin: 2rem;
+            font-size: xx-large;
+        }
+        #dynamicElement{
+            transition: background-color 0.5s ease;
+            font-size: x-large;
+            margin: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- JavaScript -->
+    <h1>Your Website</h1>
+    <div id="dynamicElement" class="">Hello JavaScript</div>
+    <button onclick="changeColor()">Color-Change</button>
+
+    <script>
+        const dynamicElement = document.getElementById('dynamicElement');
+
+        dynamicElement.style.backgroundColor = 'lightblue';
+        dynamicElement.style.color = 'darkblue';
+
+        function changeColor(){
+            const randomColor = getRandomColor();
+            dynamicElement.style.backgroundColor = randomColor;
+        }
+
+        function getRandomColor(){
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for(let i=0; i<6; i++){
+                color += letters[Math.floor(Math.random() * 16)]
+                if(color == '#1' || color == '#2' || color == '#3'){
+                    dynamicElement.style.color = 'white';
+                }
+            }
+            return color;
+        }
+
+    </script>
+</body>
+</html>

@@ -1,5 +1,7 @@
 # 30 Days - 30 JavaScript Projects
 
+Day 0 - (JavaScript Basics)
+
 Day 1 - 
 Day 2 - 
 Day 3 - 

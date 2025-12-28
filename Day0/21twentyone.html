@@ -6,7 +6,39 @@
     <title>JSON</title>
 </head>
 <body>
+    <p id="demo">Hello World</p>
+    <hr>
+
+    <p id="changeMe">Click the button to change me!</p>
+    <button onclick="changeText()">ClickMe</button>
+    <hr>
     
-    <script src="21JShtmldom.js"></script>
+    <p id="styleMe">Watch my Color change!</p>
+    <button onclick="changeColor()">Change Color</button>
+    <hr>
+
+    <button onclick="addElement()">Add Item</button>
+    <ul id="list"></ul>
+
+    
+    <script>
+        var element = document.getElementById("demo");
+        console.log(element.innerHTML);
+
+        function changeText(){
+            document.getElementById("changeMe").innerHTML = "Text has been Changed!";
+        }
+
+        function changeColor(){
+            document.getElementById("styleMe").style.color = "blue";
+        }
+
+        function addElement(){
+            let li = document.createElement("li");
+            li.textContent = "New list item";
+            document.getElementById("list").appendChild(li);
+        }
+
+    </script>
 </body>
 </html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invalid Input Shake</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+
+        body{
+            background-color: #0080ff;
+        }
+
+        form {
+            width: in(90%, 25em);
+            background-color: aliceblue;
+            position: absolute;
+            transform: translate(-50%,-50%);
+            top: 50%;
+            left: 50%;
+            padding: 5em 2em;
+            border-radius: 0.5em;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0 ,0.3);
+        }
+
+        .error-message {
+            color: #ff3434;
+            visibility: hidden;
+            transition: visibility 0.3s ease;
+        }
+
+        input, button {
+            display: block;
+            width: 100%;
+            padding: 1em;
+            outline: none;
+            color: white;
+            border: none;
+            border-radius: 0.3em;
+            transition: background-color 0.3s ease;
+        }
+
+        input {
+            background-color: #e2e2e2;
+            color: #ff3434;
+            /* margin-top: 2.5em; */
+            border: 1px solid darkblue;
+        }
+
+        button {
+            background-color: #0080ff;
+            margin-top: 2.5em;
+            cursor: pointer;
+        }
+
+        .shake {
+            animation: shake 0.5s ease-in-out
+        }
+
+        @keyframes shake {
+            0% {
+                transform: translate(0);
+            }
+            25% {
+                transform: translate(-5px);
+            }
+            50% {
+                transform: translate(5px);
+            }
+            75% {
+                transform: translate(-5px);
+            }
+            100% {
+                transform: translate(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <form action="" id="myForm">
+        <div id="errorMessage" class="error-message">Invalid Input</div>
+        <input type="text" id="inputField" placeholder="Enter Some Text" required>
+        <button onclick="validateInput()" type="submit">Submit</button>
+    </form>
+
+
+    <script>
+        function validateInput(){
+            let inputField = document.getElementById("inputField");
+            let inputValue = inputField.value.trim();
+            let errorMessage = document.getElementById("errorMessage");
+
+            if(inputValue === ""){
+                inputField.classList.add("shake");
+                errorMessage.style.visibility = "visible";
+
+                setTimeout(function(){
+                    inputField.classList.remove("shake");
+                    errorMessage.style.visibility = "hidden";
+                }, 500);
+            } else {
+                alert("Valid Inputs");
+            }
+        }
+    </script>
+</body>
+</html>

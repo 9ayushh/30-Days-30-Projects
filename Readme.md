@@ -3,7 +3,7 @@
 Day 0 - (JavaScript Basics)
 
 Day 1 - Invalid Input Shake
-Day 2 - 
+Day 2 - Box Shadow Generator
 Day 3 - 
 Day 4 - 
 Day 5 - 

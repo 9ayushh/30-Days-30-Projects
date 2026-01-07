@@ -5,14 +5,224 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FD Calculator</title>
     <style>
+        body {
+            font-family: sans-serif;
+            background-color: honeydew;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .calculator {
+            background: linear-gradient(120deg, #f56456, #f5576c);
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            width: 520px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .calculator::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(120deg, #f093fb, #f56456);
+            z-index: -1;
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframe fadeIn{
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+
+        @keyframes rotate {
+            from {transform: rotate(0deg);}
+            to {transform: rotate(360deg);}
+        }
+
+        .calculator h1 {
+            font-size: 34px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .input-section {
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .input-section label {
+            display: block;
+            font-size: 24px;
+            margin-bottom: 5px;
+            color: white;
+        }
+
+        .input-section input[type="range"] {
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .input-section span {
+            display: block;
+            color: white;
+            font-size: 20px;
+            margin-top: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            z-index: 1;
+        }
+
+        button:hover{
+            background-color: #218838;
+        }
+
+        .output-section {
+            margin-top: 20px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .output-section p{
+            margin: 5px 0;
+            font-size: 18px;
+            color: white;
+        }
+
+        .output-section span {
+            font-weight: bold;
+        }
+
+        input[type="range"] {
+            appearance: none;
+            width: 100%;
+            height: 8px;
+            background: #ddd;
+            outline: none;
+            opacity: 0.9;
+            transition: 0.2s;
+            transition: opacity 0.2s;
+        }
+
+        input[type="range"] {
+            opacity: 1;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background-color: #28a745;
+            cursor: pointer;
+            border-radius: 50%;
+        }
 
     </style>
 </head>
 <body>
     
+    <div class="calculator">
+        <h1>FD Calculator</h1>
+
+        <div class="input-section">
+            <label for="investment">Total Investment</label>
+            <input type="range" id="investment" min="10000" max="1000000" step="10000" value="100000">
+            <span id="investment-value">Rs.100,000</span>
+        </div>
+
+        <div class="input-section">
+            <label for="interest">Rate of Interest(p.a)</label>
+            <input type="range" id="interest-rate" min="1" max="15" step="0.1" value="6.5">
+            <span id="interest-rate-value">6.5%</span>
+        </div>
+
+        <div class="input-section">
+            <label for="time-period">Time period (Years)</label>
+            <input type="range" id="time-period" min="1" max="20" step="1" value="5">
+            <span id="time-period-value">5</span>
+        </div>
+
+        <button onclick="calculateFD()">INVEST NOW</button>
+        <div class="output-section">
+            <p>Invested Amount: <span id="invested-amount"></span></p>
+            <p>Est. Returns: <span id="estimated-returns"></span></p>
+            <p>Total Value: <span id="total-value"></span></p>
+        </div>
+
+    </div>
     
     <script>
+        document.addEventListener("DOMContentLoaded", function(){
+            const investmentInput = document.getElementById("investment");
+            const interestRateInput = document.getElementById("interest-rate");
+            const timePeriodInput = document.getElementById("time-period");
 
+            investmentInput.addEventListener("input", function(){
+                updateInvestmentValue(this.value);
+            });
+
+            interestRateInput.addEventListener("input", function(){
+                updateInterestRateValue(this.value);
+            });
+
+            timePeriodInput.addEventListener("input", function(){
+                updateTimePeriodValue(this.value);
+            });
+
+            updateInvestmentValue(investmentInput.value);
+            updateInterestRateValue(interestRateInput.value);
+            updateTimePeriodValue(timePeriodInput.value);
+
+        });
+
+        function updateInvestmentValue(value){
+            document.getElementById("investment-value").innerText = `${parseFloat(value).toLocaleString('en-IN')}`;
+        }
+        
+        function updateInterestRateValue(value){
+            document.getElementById("interest-rate-value").innerText = `${parseFloat(value).toFixed(1)}%`;
+        }
+        
+        function updateTimePeriodValue(value){
+            document.getElementById("time-period-value").innerText = value;
+        }
+
+        function calculateFD(){
+            const principal = parseFloat(document.getElementById("investment").value);
+            const rateOfInterest = parseFloat(document.getElementById("interest-rate").value);
+            const timePeriod = parseFloat(document.getElementById("time-period").value);
+
+            const n = 4;
+            const totalAmount = principal * Math.pow((1 + (rateOfInterest/100) / n), n * timePeriod);
+            const interestEarned = totalAmount - principal;
+
+            document.getElementById("invested-amount").innerText = `Rs.${principal.toLocaleString('en-IN')}`;
+            document.getElementById("estimated-returns").innerText = `Rs.${Math.round(interestEarned).toLocaleString('en-IN')}`;
+            document.getElementById("total-value").innerText = `Rs.${Math.round(totalAmount).toLocaleString('en-IN')}`;
+
+        }
+        
     </script>
 </body>
 </html>

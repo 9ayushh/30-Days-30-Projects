@@ -7,9 +7,9 @@ Day 2 - Box Shadow Generator
 Day 3 - Notes Application
 Day 4 - FD Calculator
 Day 5 - Gradient Generator
-Day 6 - 
-Day 7 - 
-Day 8 - 
+Day 6 - BMI Calculator
+Day 7 - Tip Calculator
+Day 8 - Blob Maker
 Day 9 - 
 Day 10 - 
 Day 11 - 

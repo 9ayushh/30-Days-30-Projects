@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tip Calculator</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+            letter-spacing: 0.4;
+        }
+
+        body {
+            background: darkturquoise;
+        }
+
+        .container {
+            background: linear-gradient(135deg, #ff6a88, #ff9566);
+            width: 450px;
+            padding: 50px 40px;
+            border-radius: 10px;
+            position: absolute;
+            transform: translate(-50%, -50%);
+            top: 50%;
+            left: 50%;
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.1);
+            animation: slideIn 0.5s ease forwards;
+        }
+
+        @keyframes slideIn {
+            from {
+                top: -50%;
+            }
+            to {
+                top: 50%;
+            }
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            text-decoration: underline;
+        }
+
+        .wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 12px 0;
+        }
+
+        .lbl {
+            font-size: 18px;
+            color: #fff;
+            font-weight: 400;
+            transition: color 0.3s ease;
+        }
+
+        .val {
+            color: #fff;
+            font-weight: 500;
+            font-size: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .input-box {
+            background-color: #fff;
+            color: #ff6a88;
+            padding: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        #bill {
+            background-color: transparent;
+            border: none;
+            outline: none;
+            width: 100px;
+            text-align: right; 
+            color: #ff6a88;
+            transition: color 0.3s ease;
+        }
+
+        hr {
+            border: none;
+            border-bottom: 1px solid #fff;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            cursor: pointer;
+            appearance: none;
+            height: 2px;
+            border-radius: 2px;
+            background-color: #fff;
+            outline: none;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #58d68d;
+            transition: background-color 0.3s ease;
+        }
+
+        section:not(:last-child) {
+            margin-top: 40px;
+        }
+
+        section:not(:first-child) {
+            margin-top: 40px;
+        }
+
+        section:last-child {
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            animation: fadeIn 1s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        section:last-child .val, section:last-child .lbl {
+            color: #ff6a88;
+            transition: color 0.3s ease;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Tip Calculator</h1>
+        <section>
+            <div class="wrapper">
+                <label for="bill" class="lbl">Bill</label>
+                <div class="input-box">
+                    <span>$</span>
+                    <input type="number" value="0.00" id="bill" class="val">
+                </div>
+            </div>
+            <hr>
+
+            <div class="wrapper">
+                <span class="lbl">Tip</span>
+                <span id="tip-amount" class="val">$0</span>
+            </div>
+            
+            <div class="wrapper">
+                <span class="lbl">Total Amount</span>
+                <span id="total-amount" class="val">$0</span>
+            </div>
+        </section>
+        <section>
+            <div class="wrapper">
+                <label for="tip" class="lbl">Tip%</label>
+                <span id="tip-percent" class="val">0</span>
+            </div>
+
+            <input type="range" id="tip" min="1" value="15">
+
+            <div class="wrapper">
+                <label for="no-of-people" class="lbl">No. of People</label>
+                <span id="split-num" class="val">0</span>
+            </div>
+
+            <input type="range" min="1" max="15" value="1" id="no-of-people">
+
+        </section>
+
+        <section>
+            <div class="wrapper">
+                <span class="lbl">Tip Per Person</span>
+                <span id="tip-per-person" class="val">$0</span>
+            </div>
+
+            <div class="wrapper">
+                <span class="lbl">Total Per Person</span>
+                <span id="total-per-person" class="val">$0</span>
+            </div>
+        </section>
+    </div>
+    
+    <script>
+
+        const sliders = document.querySelectorAll("input[type='range']");
+        sliders.forEach(function(slider){
+            slider.addEventListener("input", calculateTip)
+        });
+
+        const billInput = document.getElementById("bill");
+        billInput.addEventListener("change", calculateTip);
+
+        function calculateTip() {
+            let bill = parseFloat(billInput.value);
+            let tipPercent = document.getElementById("tip").value;
+            let noOfPeople = document.getElementById("no-of-people").value;
+
+            billInput.value = bill.toFixed(2);
+
+            let totalTip = parseFloat((bill * (tipPercent/100)).toFixed(2));
+            let total = parseFloat((bill + totalTip).toFixed(2));
+
+            let tipPerPerson = (totalTip/noOfPeople).toFixed(2);
+
+            let totalPerPerson = (total/noOfPeople).toFixed(2);
+
+            document.getElementById("tip-amount").textContent = `$${totalTip}`;
+
+            document.getElementById("total-amount").textContent = `$${total}`;
+
+            document.getElementById("tip-percent").textContent = `${tipPercent}%` ;
+
+            document.getElementById("split-num").textContent = `${noOfPeople}`;
+
+            document.getElementById("tip-per-person").textContent = `$${tipPerPerson}`;
+
+            document.getElementById("total-per-person").textContent = `$${totalPerPerson}`;
+        }
+
+        calculateTip();
+
+    </script>
+</body>
+</html>

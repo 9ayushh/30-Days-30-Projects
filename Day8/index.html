@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blob Maker</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            outline: none;
+            font-family: monospace;
+            font-weight: 400;
+            color: #010120;
+        }
+
+        body {
+            background-color: #8b5ceb;
+        }
+
+        .wrapper {
+            background-color: #fff;
+            width: 45%;
+            min-width: 550px;
+            padding: 30px;
+            position: absolute;
+            transform: translate(-50%,-50%);
+            top: 50%;
+            left: 50%;
+            border-radius: 8px;
+        }
+
+        .output {
+            background-color: #ddf3f8;
+            width: 100%;
+            min-height: 250px;
+            padding: 20px 0;
+            overflow: hidden;
+            border-radius: 5px;
+            position: relative;
+            display: grid;
+            place-items: center;
+        }
+
+        .blob {
+            height: 300px;
+            width: 300px;
+            background: linear-gradient(#99a2f0, #555eaa);
+            box-shadow: 15px 20px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .dimensions {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin: 40px 0 40px 0;
+        }
+
+        label {
+            font-weight: 500;
+        }
+
+        input[type="number"]:focus {
+            background-color: #f1f5fa;
+            border-color: #025eaa;
+            color: #025eaa;
+        }
+
+        .sliders {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        input[type="text"] {
+            width: 82%;
+            margin-top: 50px;
+            padding: 10px;
+            font-size: 12px;
+            border: none;
+            background-color: #f1eff9;
+            border-radius: 3px;
+        }
+
+        button {
+            width: 12%;
+            margin-left: 4%;
+            padding: 10px 0;
+            background: linear-gradient(#99a2f0, #555eaa);
+            box-shadow: 15px 20px 30px rgba(0, 0, 0, 0.15);
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
+            color: #fff;
+            font-size: 12px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="output">
+            <div class="blob"></div>
+        </div>
+
+        <div class="dimensions">
+            <div>
+                <label for="blob-height">Height</label>
+                <input type="number" value="150" id="blob-height">
+            </div>
+            <div>
+                <label for="blob-width">Width</label>
+                <input type="number" value="112" id="blob-width">
+            </div>
+        </div>
+
+        <div class="sliders">
+            <input type="range" value="30">
+            <input type="range" value="80">
+            <input type="range" value="60">
+            <input type="range" value="40">
+        </div>
+        <input type="text" id="css-code" readonly>
+        <button id="copy">Copy</button>
+    </div>
+    
+    <script>
+        let outputCode = document.getElementById("css-code");
+
+        let sliders = document.querySelectorAll("input[type='range']");
+        sliders.forEach(function(slider){
+            slider.addEventListener("input", createBlob);
+        });
+
+        let inputs = document.querySelectorAll("input[type='number']");
+        inputs.forEach(function(inp){
+            inp.addEventListener("change", createBlob);
+        });
+
+        function createBlob(){
+            let radiusOne = sliders[0].value;
+            let radiusTwo = sliders[1].value;
+            let radiusThree = sliders[2].value;
+            let radiusFour = sliders[3].value;
+
+            let blobHeight = inputs[0].value;
+            let blobWidth = inputs[1].value;
+
+            // border-radius: horizontal-top-left horizontal-top-right horizontal-bottom-right horizontal-bottom-left / vertical-top-left vertical-top-right vertical-bottom-right veritcal-bottom-left;
+
+            let borderRadius = `${radiusOne}% ${100-radiusOne}% ${100-radiusThree}% ${radiusThree}% / ${radiusFour}% ${radiusTwo}% ${100 - radiusTwo}% ${100 - radiusFour}%`;
+
+            let blobStyle = `border-radius: ${borderRadius}; height: ${blobHeight}px; width: ${blobWidth}px;`
+
+            document.querySelector(".blob").style.cssText = blobStyle;
+
+            outputCode.value = blobStyle;
+
+        }
+
+        document.getElementById("copy").addEventListener("click", function(){
+            navigator.clipboard.writeText(outputCode.value).then(function(){
+                alert("Code is Copied");
+            });
+        });
+
+        createBlob();
+
+    </script>
+</body>
+</html>

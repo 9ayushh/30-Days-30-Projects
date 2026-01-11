@@ -5,12 +5,116 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Day of the Week</title>
     <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(-45deg, #ffafbd, #ffc3ac, #2193b0, #6dd5ed);
+            background-size: 400% 400%;
+            animation: gradientBackground 15s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        @keyframes gradientBackground {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
+        }
+
+        .card {
+            width: 450px;
+            height: 350px;
+            background-color: rgba(255,255,255,0.8);
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            animation: fadeIn 1s ease infinite;
+            position: relative;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse {
+            0% {transform: scale(1);}
+            50% {transform: scale(1.05);}
+            100% {transform: scale(1);}
+        }
+
+        #container {
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 47px;
+            font-weight: 600;
+            color: #fff;
+            text-transform: uppercase;
+            background-color: #9900ff;
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            display: inline-block;
+            animation: pulse 2s infinite;
+        }
+
+        #weekday {
+            font-size: 80px;
+            color: #dd5800;
+            font-weight: 800;
+            animation: pulse 2s infinite;
+        }
+
+        #phrase {
+            font-size: 40px;
+            color: #9900ff;
+            font-weight: 800;
+            animation: pulse 2s infinite;
+        }
 
     </style>
 </head>
 <body>
+    <div class="card">
+        <div id="container">
+            <h1>Today is:</h1>
+            <div>
+                <span id="weekday">
+                    Monday
+                </span>
+                <br>
+                <span id="phrase">Display a quote</span>
+            </div>
+        </div>
+    </div>
     
     <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const days = [
+                {name : 'Sunday', quote: 'Time to chill!'},
+                {name : 'Monday', quote: 'Monday morning blues!'},
+                {name : 'Tuesday', quote: 'Taco Time!'},
+                {name : 'Wednesday', quote: 'Tow more days to the weekend.'},
+                {name : 'Thursday', quote: 'The weekend is almost here...'},
+                {name : 'Friday', quote: 'Weekend is here!'},
+                {name : 'Saturday', quote: 'Time to party!'}
+            ];
+
+            const today = days[new Date().getDay()];
+            console.log(today);
+
+            document.getElementById("weekday").textContent = today.name;
+            document.getElementById("phrase").textContent = today.quote;
+        });
         
     </script>
 </body>

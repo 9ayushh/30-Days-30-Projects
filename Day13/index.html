@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Word Counter</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+
+        .wrapper {
+            position: absolute;
+            width: 90vmin;
+            transform: translate(-50%, -50%);
+            top: 50%;
+            left: 50%;
+        }
+
+        .container {
+            background: #394c66;
+            padding: 50px 30px 80px 30px;
+            border-radius: 8px;
+            box-shadow: 0 30px 50px rgba(30, 21, 49, 0.6);
+        }
+
+        textarea {
+            width: 100%;
+            border: none;
+            resize: none;
+            outline: none;
+            padding: 10px;
+            line-height: 28px;
+            color: black;
+        }
+
+        .count {
+            background-color: #1f2b3d;
+            width: 80%;
+            padding: 20px;
+            position: relative;
+            transform: translate(-50%, -50%);
+            left: 50%;
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            border-radius: 5px;
+            box-shadow: 0 20px 40px rgba(30, 21, 49, 0.4);
+        }
+
+        .count p {
+            color: #a0a0c0;
+        }
+
+        .count h5 {
+            color: #ffffff;
+            font-size: 32px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="container">
+            <textarea id="input-textarea" rows="12" placeholder="Start Typing..."></textarea>
+        </div>
+        
+        <div class="count">
+            <div>
+                <h5 id="word-count">0</h5>
+                <p>Words</p>
+            </div>
+            <div>
+                <h5 id="charac-count">0</h5>
+                <p>Characters</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const inputTextArea = document.getElementById("input-textarea");
+        const charaCount = document.getElementById("charac-count");
+        const wordsCount = document.getElementById("word-count");
+
+        inputTextArea.addEventListener("input", ()=> {
+            // Character counts
+            charaCount.textContent = inputTextArea.value.length;
+
+            // Words Count
+            const txt = inputTextArea.value.trim();
+            const wordArray = txt.split(/\s+/);
+
+            let wordCountValue = 0
+            for(let i =0; i< wordArray.length; i++){
+                if(wordArray[i] != ""){
+                    wordCountValue++;
+                }
+            }
+            wordsCount.textContent = wordCountValue;
+        })
+
+
+    </script>
+</body>
+</html>

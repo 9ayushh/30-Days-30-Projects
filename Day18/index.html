@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Changer Application</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --padding: 20px;
+            --blur: 0px;
+            --base: rgb(255,133,0);
+            --width: 50%;
+            --border-radius: 15px;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            font-family: sans-serif;
+            background-color: #f6f6f6;
+        }
+
+        .container {
+            border-radius: 20px;
+            background: linear-gradient(to right, #1d2b64, #61045f);
+            box-shadow: 10px 10px 10px rgba(246, 178, 172, 0.2), -10px -10px 30px rgba(255, 107, 107, 0.8);
+            padding: 3rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #f6f6f6;
+            margin-bottom: 1rem;
+        }
+
+        .heading {
+            font-size: 2rem;
+            color: var(--base);
+            font-weight: 800;
+        }
+
+        .css-controller {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 1rem 0;
+        }
+
+        label {
+            padding-left: 1rem;
+            font-size: 1rem;
+            color: #f6f6f6;
+            margin-top: 0.5rem;
+        }
+
+        img {
+            width: var(--width);
+            height: 80%;
+            margin-top: 1rem;
+            padding: var(--padding);
+            filter: blur(var(--blur));
+            background-color: var(--base);
+            border-radius: var(--border-radius);
+            transition: filter 0.3s ease, background-color 0.3s ease;
+        }
+
+        input[type="color"] {
+            width: 30px;
+            height: 30px;
+            vertical-align: middle;
+            margin-left: 5px;
+            border-radius: 50%;
+            border: none;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .css-controller input[type="color"]::-webkit-color-swatch {
+            border: none;
+            border-radius: 50%;
+        }
+        
+        .css-controller input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+        
+        .css-controller input[type="color"]::-moz-color-swatch {
+            border: none;
+            border-radius: 50%;
+        }
+
+        .css-controller input[type="color"]::-moz-color-swatch-wrapper {
+            padding: 0;
+        }
+
+        .css-controller input[type="range"] {
+            width: 100%;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Change the CSS of below image! with the help of the sliders</h1>
+        <span class="heading">JavaScript</span>
+
+        <div class="css-controller">
+            <label for="base">Base Color</label>
+            <input type="color" name="base" value="#ff0000" id="base">
+
+            <label for="width">Width</label>
+            <input type="range" name="width" min="0" max="100" value="30" data-sizing="%" id="width">
+
+            <label for="border-radius">Border-Radius</label>
+            <input type="range" name="border" min="0" max="100" value="50" data-sizing="px" id="border-radius">
+
+            <label for="padding">Padding</label>
+            <input type="range" name="padding" min="10" max="100" value="0" data-sizing="px" id="padding">
+
+            <label for="blur">Blur</label>
+            <input type="range" name="blur" min="0" max="25" value="0" data-sizing="px" id="blur">
+        </div>
+
+        <img src="https://cdn.pixabay.com/photo/2023/08/26/22/44/brewers-blackbird-8215850_640.jpg" alt="Image from Pixabay">
+    </div>
+
+    <script>
+        const inputs = document.querySelectorAll(".css-controller input");
+
+        inputs.forEach((inputs) => inputs.addEventListener("change", update()));
+
+        function update() {
+            const suffixData = this.dataset.sizing || "";
+            document.documentElement.style.setProperty(
+                `--${this.name}`,
+                this.value + suffixData
+            );
+        }
+
+    </script>
+</body>
+</html>

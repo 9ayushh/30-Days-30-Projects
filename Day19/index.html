@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Robot Joke Generator</title>
+    <style>
+        :root {
+            --accent-color: #4183D7;
+            --background-color: linear-gradient(135deg, #ff8cba 0%, #bdb9e8 100%);
+            --light-background: #333;
+            --text-color: #f8f8f8;
+            --chatbox-color: #555;
+        }
+
+        body {
+            font-family: sans-serif;
+            background: var(--background-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            color: var(--text-color);
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            background-color: #2e2e2e;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
+            height: 80vh;
+            width: 40vw;
+            max-height: 80%;
+            margin: 20px;
+            padding: 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            margin: 20px;
+            color: var(--accent-color);
+        }
+
+        .header .avatar {
+            background-color: var(--accent-color);
+            align-self: center;
+            padding: 5px;
+            width: 50px;
+            border-radius: 50%;
+            animation: pulseAvatar 1.5s infinite;
+        }
+
+        @keyframes pulseAvatar {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .header h3 {
+            margin-left: 20px;
+            margin-right: auto;
+            font-size: 24px;
+            color: var(--accent-color);
+        }
+
+        .chat {
+            background-color: var(--chatbox-color);
+            height: 100%;
+            padding: 10px;
+            border-radius: 20px;
+            overflow-y: auto;
+        }
+
+        .message {
+            font-size: 16px;
+            line-height: 25px;
+            width: fit-content;
+            max-width: 450px;
+            margin: 20px 10px;
+            padding: 20px;
+            border-radius: 20px;
+        }
+
+        .message.joke {
+            background-color: var(--accent-color);
+            color: #fff;
+            border-top-left-radius: 0px;
+            padding: 30px;
+        } 
+
+        .message.response {
+            background-color: #eee;
+            border-top-right-radius: 0px;
+            margin-left: auto;
+            padding-right: 30px;
+            color: #000;
+        } 
+
+        .btn {
+            background-color: var(--accent-color);
+            color: #fff;
+            font-family: inherit;
+            border: 0;
+            border-radius: 30px;
+            padding: 14px 40px;
+            margin: 20px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        .btn:hover {
+            background-color: blue;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <img src="https://cdn.pixabay.com/photo/2017/01/31/20/53/robot-2027195_640.png" alt="" class="avatar">
+            <h3>Robot</h3>
+        </div>
+        <div id="_chat" class="chat">
+        </div>
+        <button id="jokeBtn" class="btn">Can you tell me a joke?</button>
+    </div>
+
+    <script>
+        const chat = document.getElementById("_chat");
+        const jokeBtn = document.getElementById("jokeBtn");
+
+        generateJoke();
+
+        jokeBtn.addEventListener("click", generateJoke);
+
+        async function generateJoke(parms) {
+            jokeBtn.disabled = true;
+
+            const message = createMessageElement("Hey Robot! tell me a joke.");
+            appendMessage(message);
+
+            const joke = createMessageElement();
+            setElementContent(joke,'<i class="fa-solid fa-ellipsis"></i>');
+            appendMessage(joke);
+
+            const res = await fetch("https://icanhazdadjoke.com", {
+                headers: {
+                    Accept: "application/json",
+                },
+            });
+
+            if(res.ok) {
+                const data = await res.json();
+                console.log(data);
+                setElementContent(joke,data.joke);
+                jokeBtn.disabled = false;
+            }
+        }
+
+        function createMessageElement(content){
+            const element = document.createElement("div");
+            element.classList.add("message");
+            if(content) {
+                element.classList.add("response");
+                setElementContent(element, content);
+            }else {
+                element.classList.add("joke");
+            }
+            return element;
+        }
+
+        function setElementContent(element,content) {
+            element.innerHTML = content;
+        }
+
+        function appendMessage(element) {
+            chat.appendChild(element);
+        }
+
+    </script>
+</body>
+</html>

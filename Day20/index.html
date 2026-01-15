@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Star Rating Project</title>
+    <style>
+        html, body {
+            font-family: fantasy;
+            display: grid;
+            height: 100%;
+            place-items: center;
+            text-align: center;
+            background: #d8d4d4;
+        }
+
+        .wrapper {
+            position: relative;
+            width: 400px;
+            background: #111;
+            padding: 50px 90px;
+            border: 1px solid #444;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .post {
+            display: none;
+        }
+
+        .text {
+            font-size: 25px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .edit, .btn button {
+            display: inline-block;
+            background-color: #4285f4;
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        .star-widget input {
+            display: none;
+        }
+
+        .star-widget label {
+            font-size: 40px;
+            color: #444;
+            padding: 10px;
+            float: right;
+            transition: all 0.2s ease;
+        }
+
+        input:not(:checked) ~ label:hover, input:not(:checked) ~ label:hover ~ label {
+            color: #fd4;
+        }
+
+        input:checked ~ label {
+            color: #fd4;
+        }
+
+        #rate-1:checked ~ form header:before {
+            content: "I hate it";
+        }
+
+        #rate-2:checked ~ form header:before {
+            content: "I don't like it";
+        }
+
+        #rate-3:checked ~ form header:before {
+            content: "It's an average";
+        }
+
+        #rate-4:checked ~ form header:before {
+            content: "I liked it";
+        }
+
+        #rate-5:checked ~ form header:before {
+            content: "I love it";
+        }
+
+        .wrapper form {
+            display: none;
+        }
+        
+        input:checked ~ form {
+            display: block;
+        }
+
+        form header {
+            width: 100%;
+            font-size: 25px;
+            color: #f3df48;
+            font-weight: 500;
+            margin: 5px 0 20px 0;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        form .btn button {
+            padding: 10px 40px;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <div class="post">
+            <div class="text">Thanks for rating us!</div>
+            <div class="edit">EDIT</div>
+        </div>
+        <div class="star-widget">
+            <input type="radio" name="rate" id="rate-5">
+            <label for="rate-5" class="fas fa-star"></label>
+            <input type="radio" name="rate" id="rate-4">
+            <label for="rate-4" class="fas fa-star"></label>
+            <input type="radio" name="rate" id="rate-3">
+            <label for="rate-3" class="fas fa-star"></label>
+            <input type="radio" name="rate" id="rate-2">
+            <label for="rate-2" class="fas fa-star"></label>
+            <input type="radio" name="rate" id="rate-1">
+            <label for="rate-1" class="fas fa-star"></label>
+            <form action="#">
+                <header></header>
+                <div class="btn">
+                    <button type="submit">rate</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        const btn = document.querySelector("button");
+        const post = document.querySelector(".post");
+        const widget = document.querySelector(".star-widget");
+        const editBtn = document.querySelector(".edit");
+
+        btn.onclick = () => {
+            widget.style.display = "none";
+            post.style.display = "block";
+
+            editBtn.onclick = () => {
+                widget.style.display = "block";
+                post.style.display = "none"
+            };
+        };
+        
+
+    </script>
+</body>
+</html>

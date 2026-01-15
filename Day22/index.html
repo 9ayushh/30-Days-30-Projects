@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Random Number Generator</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #3498db;
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .number-container {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeIn 1s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        button {
+            background-color: #2ecc71;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #27ae60;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Random Number Generator</h1>
+        <div class="number-container">
+            <span id="random-number">0</span>
+        </div>
+        <button id="generate-btn">Generate</button>
+    </div>
+    
+    <script>
+        const generateBtn = document.getElementById("generate-btn");
+        const numberElement = document.getElementById("random-number");
+
+        generateBtn.addEventListener("click", () => {
+            const randomNumber = Math.floor(Math.random() * 100) + 1;
+
+            numberElement.textContent = randomNumber;
+
+        });
+
+    </script>
+</body>
+</html>

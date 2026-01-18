@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date and Time Widget</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+
+        body {
+            background-color: #1a1a1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 35.87em;
+            display: grid;
+            align-items: center;
+            grid-template-columns: 8fr 4fr;
+            background-color: #1e90ff;
+            border-radius: 0.5em;
+            animation: neon-glow 1.5s ease-in-out infinite alternate;
+        }
+
+        .clock-container {
+            background-color: #1a1a1a;
+            color: #fff;
+            text-align: center;
+            font-size: 3.75em;
+            margin-left: 0.2em;
+            border-radius: 0.1em;
+            padding: 0.2em 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .clock-container span {
+            width: 120px;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .hours {
+            color: #ff0000;
+        }
+
+        .minutes {
+            color: #00ff00;
+        }
+
+        .seconds {
+            color: #0000ff;
+        }
+
+        @keyframes neon-glow {
+            0% {
+                box-shadow: 0 0 5px #ffffff, 0 0 20px #ffffff;
+            } 100% {
+                box-shadow: 0 0 20px #ffffff, 0 0 40px #ffffff;
+            }         
+        }
+
+        .data-container {
+            padding: 10px;
+            background-color: #2784e0;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        .data-container span {
+            font-size: 2.5em;
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="clock-container">
+            <span class="hours">23:</span>
+            <span class="minutes">45:</span>
+            <span class="seconds">05:</span>
+        </div>
+        <div class="data-container">Sunday</div>
+    </div>
+
+    <script>
+        let dataContainer = document.querySelector(".data-container");
+        let hoursContainer = document.querySelector(".hours");
+        let minutesContainer = document.querySelector(".minutes");
+        let secondsContainer = document.querySelector(".seconds");
+
+        const weekdays = [
+            "Sunday",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday"
+        ];
+
+        const monthNames = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December"
+        ];
+
+        function formatTime(time) {
+            return time < 10 ? "0" + time : time;
+        }
+
+        function updateClock(){
+            const today = new Date();
+            // console.log(today);
+            let date = today.getDate();
+            // console.log(date);
+            let day = weekdays[today.getDay()];
+            let month = monthNames[today.getMonth()];
+
+            // console.log(day, month);
+            // console.log(today.getDay(), today.getMonth());
+
+            let hours = formatTime(today.getHours());
+            let minutes = formatTime(today.getMinutes());
+            let seconds = formatTime(today.getSeconds());
+
+            dataContainer.innerHTML = `<p>${day}</p><p><span>${date}</span></p><p>${month}</p>`;
+
+            hoursContainer.textContent = hours + ":";
+            minutesContainer.textContent = minutes + ":";
+            secondsContainer.textContent = seconds + ":";
+
+        }
+
+        setInterval(updateClock, 1000);
+
+    </script>    
+</body>
+</html>

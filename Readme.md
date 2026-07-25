@@ -1,19 +1,19 @@
 # 30 Days - 30 JavaScript Projects
 
-Day 0 - (JavaScript Basics)
+- Day 0 - (JavaScript Basics)
 
-Day 1 - Invalid Input Shake
-Day 2 - Box Shadow Generator
-Day 3 - Notes Application
-Day 4 - FD Calculator
-Day 5 - Gradient Generator
-Day 6 - BMI Calculator
-Day 7 - Tip Calculator
-Day 8 - Blob Maker
-Day 9 - Basic Image Editor
-Day 10 - Input Character Counter
-Day 11 - Image Slider
-Day 12 - Day of the Week
+- Day 1 - Invalid Input Shake
+- Day 2 - Box Shadow Generator
+- Day 3 - Notes Application
+- Day 4 - FD Calculator
+- Day 5 - Gradient Generator
+- Day 6 - BMI Calculator
+- Day 7 - Tip Calculator
+- Day 8 - Blob Maker
+- Day 9 - Basic Image Editor
+- Day 10 - Input Character Counter
+- Day 11 - Image Slider
+- Day 12 - Day of the Week
 Day 13 - Live Word Counter
 Day 14 - Video Slider
 Day 15 - Get Unicorn Value
